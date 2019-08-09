@@ -29,7 +29,6 @@ coverage
 build/Release
 
 # Dependency directories
-package-lock.json
 node_modules
 jspm_packages
 
@@ -104,7 +103,6 @@ fabric.properties
 x64/
 x86/
 bld/
-[Bb]in/
 [Oo]bj/
 [Ll]og/
 
@@ -337,12 +335,7 @@ paket-files/
 .idea/
 *.sln.iml
 
-src/**/*.js
-bin/**/*.js
-test/**/*.js
 typings/
-*.d.ts
 test/actual/*
 coverage/
-*.map
 .DS_Store
