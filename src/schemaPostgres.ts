@@ -29,15 +29,15 @@ export class PostgresDatabase implements Database {
                 case 'timetz':
                 case 'interval':
                 case 'name':
+                case 'int8':
+                case 'float8':
+                case 'numeric':
+                case 'money':
                     column.tsType = 'string'
                     return column
                 case 'int2':
                 case 'int4':
-                case 'int8':
                 case 'float4':
-                case 'float8':
-                case 'numeric':
-                case 'money':
                 case 'oid':
                     column.tsType = 'number'
                     return column
@@ -55,11 +55,7 @@ export class PostgresDatabase implements Database {
                     return column
                 case '_int2':
                 case '_int4':
-                case '_int8':
                 case '_float4':
-                case '_float8':
-                case '_numeric':
-                case '_money':
                     column.tsType = 'Array<number>'
                     return column
                 case '_bool':
@@ -67,9 +63,13 @@ export class PostgresDatabase implements Database {
                     return column
                 case '_varchar':
                 case '_text':
-                case '_citext':                    
+                case '_citext':
                 case '_uuid':
                 case '_bytea':
+                case '_int8':
+                case '_float8':
+                case '_numeric':
+                case '_money':
                     column.tsType = 'Array<string>'
                     return column
                 case '_json':
