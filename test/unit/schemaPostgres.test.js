@@ -354,7 +354,7 @@ describe('PostgresDatabase', function () {
                         nullable: false
                     }
                 };
-                assert.equal(PostgresDBReflection.mapTableDefinitionToType(td, [], options).column.tsType, 'bigint');
+                assert.equal(PostgresDBReflection.mapTableDefinitionToType(td, [], options).column.tsType, 'string');
             });
             it('float4', function () {
                 var td = {
@@ -488,7 +488,7 @@ describe('PostgresDatabase', function () {
                         nullable: false
                     }
                 };
-                assert.equal(PostgresDBReflection.mapTableDefinitionToType(td, [], options).column.tsType, 'Array<bigint>');
+                assert.equal(PostgresDBReflection.mapTableDefinitionToType(td, [], options).column.tsType, 'Array<string>');
             });
             it('_float4', function () {
                 var td = {
