@@ -114,11 +114,17 @@ var PostgresDatabase = /** @class */ (function () {
                         column.tsType = options.transformTypeName(column.udtName);
                         return column;
                     }
-                    else {
-                        console.log("Type [" + column.udtName + " has been mapped to [any] because no specific type has been found.");
-                        column.tsType = 'any';
-                        return column;
+                    if (column.udtName[0] === "_") {
+                        var subTypeName = column.udtName.slice(1);
+                        if (customTypes.indexOf(subTypeName) !== -1) {
+                            var transformedType = options.transformTypeName(subTypeName);
+                            column.tsType = "Array<" + transformedType + ">";
+                            return column;
+                        }
                     }
+                    console.log("Type [" + column.udtName + "] has been mapped to [any] because no specific type has been found.");
+                    column.tsType = 'any';
+                    return column;
             }
         });
     };
