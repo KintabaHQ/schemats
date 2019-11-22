@@ -1,5 +1,5 @@
 demo.gif
 demo2.gif
-test/artifacts
+test/
 **/*[^.d$].ts
 coverage/
