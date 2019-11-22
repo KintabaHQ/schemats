@@ -8,6 +8,7 @@
     "typescript",
     "sql"
   ],
+  "publishConfig": { "registry": "https://npm.pkg.github.com/" },
   "main": "./src/index.js",
   "types": "./src/index.d.ts",
   "scripts": {
