@@ -18,20 +18,4 @@ describe('schemats cli tool integration testing', () => {
             assert.equal(0, status)
         })
     })
-    describe('schemats generate mysql', () => {
-        before(function () {
-            if (!process.env.MYSQL_URL) {
-                this.skip()
-            }
-        })
-        it('should run without error', () => {
-            let {status} = spawnSync('node', [
-                'bin/schemats', 'generate',
-                '-c', process.env.MYSQL_URL || '',
-                '-s', 'test',
-                '-o', '/tmp/schemats_cli_postgres.ts'
-            ])
-            assert.equal(0, status)
-        })
-    })
 })
