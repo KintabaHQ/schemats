@@ -1,6 +1,6 @@
-import assert from "assert";
+import * as assert from "assert";
 
-import sinon from "sinon";
+import * as sinon from "sinon";
 
 import * as Index from "../../src/index";
 import * as Typescript from "../../src/typescript";

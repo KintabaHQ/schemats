@@ -1,4 +1,4 @@
-import PgPromise from "pg-promise";
+import * as PgPromise from "pg-promise";
 import { mapValues, keys } from "lodash";
 
 import Options from "./options";

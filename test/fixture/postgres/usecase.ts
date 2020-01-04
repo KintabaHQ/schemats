@@ -1,4 +1,4 @@
-import PgPromise from "pg-promise";
+import * as PgPromise from "pg-promise";
 
 import * as osm from "../../expected/postgres/osm";
 

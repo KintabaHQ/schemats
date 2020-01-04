@@ -1,0 +1,21 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.4.0
+    hooks:
+      - id: detect-private-key
+      - id: forbid-new-submodules
+      - id: check-merge-conflict
+  - repo: https://github.com/prettier/prettier
+    rev: 1.19.1
+    hooks:
+      - id: prettier
+        files: \.ts$
+        excludeFiles: \.d.ts$
+  - repo: local
+    hooks:
+      - id: eslint
+        name: eslint
+        language: system
+        files: \.ts$
+        excludeFiles: \.d.ts$
+        entry: ./run-eslint.sh
