@@ -16,6 +16,7 @@ describe("index", () => {
     getTableTypes: typedTableSandbox.stub(),
     query: typedTableSandbox.stub(),
     getEnumTypes: typedTableSandbox.stub(),
+    getCompositeTypes: typedTableSandbox.stub(),
     getTableDefinition: typedTableSandbox.stub(),
     getSchemaTables: typedTableSandbox.stub(),
     connectionString: "sql://",

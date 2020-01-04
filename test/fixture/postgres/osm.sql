@@ -1,5 +1,8 @@
 -- Openstreetmap schema obtained from https://git.openstreetmap.org/rails.git/blob/HEAD:/db/structure.sql
+DROP TYPE IF EXISTS format_composite CASCADE;
+DROP TYPE IF EXISTS format_enum CASCADE;
 DROP TYPE IF EXISTS user_status_enum CASCADE;
+
 CREATE TYPE user_status_enum AS ENUM (
     'pending',
     'active',
@@ -8,11 +11,16 @@ CREATE TYPE user_status_enum AS ENUM (
     'deleted'
 );
 
-DROP TYPE IF EXISTS format_enum CASCADE;
 CREATE TYPE format_enum AS ENUM (
     'html',
     'markdown',
     'text'
+);
+
+CREATE TYPE format_composite AS (
+  first_value bigint,
+  second_value text,
+  third_value format_enum
 );
 
 DROP TABLE IF EXISTS users;
@@ -77,5 +85,6 @@ CREATE TABLE users (
     name_type_col name,
     json_array_col json[],
     jsonb_array_col jsonb[],
-    timestamptz_array_col timestamptz[]
+    timestamptz_array_col timestamptz[],
+    composite_col format_composite
 );

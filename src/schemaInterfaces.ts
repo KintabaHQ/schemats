@@ -15,6 +15,7 @@ export interface Database {
   query(queryString: string): Promise<Object[]>;
   getDefaultSchema(): string;
   getEnumTypes(schema?: string): any;
+  getCompositeTypes(schema?: string): any;
   getTableDefinition(
     tableName: string,
     tableSchema: string,

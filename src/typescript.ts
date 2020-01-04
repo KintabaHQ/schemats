@@ -3,9 +3,10 @@
  * Created by xiamx on 2016-08-10.
  */
 
-import * as _ from "lodash";
+import { keys } from "lodash";
 
-import { TableDefinition } from "./schemaInterfaces";
+import { Database, TableDefinition, ColumnDefinition } from "./schemaInterfaces";
+import { PostgresDatabase } from "./schemaPostgres";
 import Options from "./options";
 
 function nameIsReservedKeyword(name: string): boolean {
@@ -54,6 +55,33 @@ export function generateEnumType(enumObject: any, options: Options) {
     enumString += ";\n";
   }
   return enumString;
+}
+
+export async function generateCompositeType(
+  db: Database | string,
+  options: Options,
+  enumTypes: string[],
+) {
+  if (!(db instanceof PostgresDatabase)) {
+    return "";
+  }
+  const compositeObject = await db.getCompositeTypes();
+  const compositeTypes = keys(compositeObject);
+  const customTypes = [...enumTypes, ...compositeTypes];
+  let compositeString = "";
+  for (const compositeNameRaw in compositeObject) {
+    const compositeName = options.transformTypeName(compositeNameRaw);
+    compositeString += `export type ${compositeName} = `;
+    const props = compositeObject[compositeNameRaw].map(t => ({
+      typeName: options.transformColumnName(t.key_name),
+      column: PostgresDatabase.mapValue(customTypes, options, t),
+    }));
+    compositeString += `{
+      ${props.map(t => `${t.typeName}: ${t.column.tsType} | null;`).join("\n")}
+    }`;
+    compositeString += ";\n";
+  }
+  return compositeString;
 }
 
 export function generateTableTypes(

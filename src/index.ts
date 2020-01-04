@@ -4,9 +4,11 @@
  */
 
 import { processString, Options as ITFOptions } from "typescript-formatter";
+import { keys } from "lodash";
 
 import {
   generateEnumType,
+  generateCompositeType,
   generateTableTypes,
   generateTableInterface,
 } from "./typescript";
@@ -98,10 +100,10 @@ export async function typescriptOfSchema(
 
   const optionsObject = new Options(options);
 
-  const enumTypes = generateEnumType(
-    await db.getEnumTypes(schema),
-    optionsObject,
-  );
+  const enumObject = await db.getEnumTypes(schema);
+  const enumTypes = generateEnumType(enumObject, optionsObject);
+  const compositeTypes = await generateCompositeType(db, optionsObject, keys(enumObject));
+
   const interfacePromises = tables.map(table =>
     typescriptOfTable(db, table, schema as string, optionsObject),
   );
@@ -114,6 +116,7 @@ export async function typescriptOfSchema(
     output += buildHeader(db, tables, schema, options);
   }
   output += enumTypes;
+  output += compositeTypes;
   output += interfaces;
 
   const formatterOption: ITFOptions = {
