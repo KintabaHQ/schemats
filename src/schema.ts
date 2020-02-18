@@ -1,4 +1,4 @@
-import { Database } from './schemaInterfaces'
+import { Database as DatabaseInternal } from './schemaInterfaces'
 import { PostgresDatabase } from './schemaPostgres'
 
 enum SQLVersion {
@@ -14,7 +14,7 @@ function getSQLVersion (connection: string): SQLVersion {
     }
 }
 
-export function getDatabase (connection: string): Database {
+export function getDatabase (connection: string): DatabaseInternal {
     switch (getSQLVersion(connection)) {
         case SQLVersion.POSTGRES:
             return new PostgresDatabase(connection)
@@ -23,4 +23,4 @@ export function getDatabase (connection: string): Database {
     }
 }
 
-export { Database } from './schemaInterfaces'
+export type Database = DatabaseInternal;
