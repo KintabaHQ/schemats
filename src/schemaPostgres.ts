@@ -106,9 +106,9 @@ export class PostgresDatabase implements Database {
     }
 
     public async getEnumTypes (schema?: string) {
-        type T = {name: string; value: any}
-        const enums: any = {}
-        const enumSchemaWhereClause = schema ? pgp.as.format(`where n.nspname = $1`, schema) : ''
+        type T = {name: string, value: any}
+        let enums: any = {}
+        let enumSchemaWhereClause = schema ? pgp.as.format(`where n.nspname = $1`, schema) : ''
         await this.db.each<T>(
              'select n.nspname as schema, t.typname as name, e.enumlabel as value ' +
              'from pg_type t ' +
@@ -127,8 +127,8 @@ export class PostgresDatabase implements Database {
     }
 
     public async getTableDefinition (tableName: string, tableSchema: string) {
-        const tableDefinition: TableDefinition = {}
-        type T = { column_name: string; udt_name: string; is_nullable: string }
+        let tableDefinition: TableDefinition = {}
+        type T = { column_name: string, udt_name: string, is_nullable: string }
         await this.db.each<T>(
             'SELECT column_name, udt_name, is_nullable ' +
             'FROM information_schema.columns ' +
@@ -144,8 +144,8 @@ export class PostgresDatabase implements Database {
     }
 
     public async getTableTypes (tableName: string, tableSchema: string, options: Options) {
-        const enumTypes = await this.getEnumTypes()
-        const customTypes = keys(enumTypes)
+        let enumTypes = await this.getEnumTypes()
+        let customTypes = keys(enumTypes)
         return PostgresDatabase.mapTableDefinitionToType(await this.getTableDefinition(tableName, tableSchema), customTypes, options)
     }
 

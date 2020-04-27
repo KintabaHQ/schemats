@@ -10,8 +10,8 @@ import { processString, Options as ITFOptions } from 'typescript-formatter'
 const pkgVersion = require('../package.json').version
 
 function getTime () {
-    const padTime = (value: number) => `0${value}`.slice(-2)
-    const time = new Date()
+    let padTime = (value: number) => `0${value}`.slice(-2)
+    let time = new Date()
     const yyyy = time.getFullYear()
     const MM = padTime(time.getMonth() + 1)
     const dd = padTime(time.getDate())
@@ -22,7 +22,7 @@ function getTime () {
 }
 
 function buildHeader (db: Database, tables: string[], schema: string|null, options: OptionValues): string {
-    const commands = ['schemats', 'generate', '-c', db.connectionString.replace(/:\/\/.*@/,'://username:password@')]
+    let commands = ['schemats', 'generate', '-c', db.connectionString.replace(/:\/\/.*@/,'://username:password@')]
     if (options.camelCase) commands.push('-C')
     if (tables.length > 0) {
         tables.forEach((t: string) => {
@@ -54,7 +54,7 @@ export async function typescriptOfTable (db: Database|string,
     }
 
     let interfaces = ''
-    const tableTypes = await db.getTableTypes(table, schema, options)
+    let tableTypes = await db.getTableTypes(table, schema, options)
     interfaces += generateTableTypes(table, tableTypes, options)
     interfaces += generateTableInterface(table, tableTypes, options)
     return interfaces
