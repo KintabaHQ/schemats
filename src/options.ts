@@ -6,8 +6,8 @@ const DEFAULT_OPTIONS: OptionValues = {
 }
 
 export type OptionValues = {
-    camelCase?: boolean
-    writeHeader?: boolean // write schemats description header
+    camelCase?: boolean;
+    writeHeader?: boolean; // write schemats description header
 }
 
 export default class Options {

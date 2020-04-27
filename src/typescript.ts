@@ -41,7 +41,7 @@ export function generateTableInterface (tableNameRaw: string, tableDefinition: T
 
 export function generateEnumType (enumObject: any, options: Options) {
     let enumString = ''
-    for (let enumNameRaw in enumObject) {
+    for (const enumNameRaw in enumObject) {
         const enumName = options.transformTypeName(enumNameRaw)
         enumString += `export type ${enumName} = `
         enumString += enumObject[enumNameRaw].map((v: string) => `'${v}'`).join(' | ')
@@ -54,15 +54,15 @@ export function generateTableTypes (tableNameRaw: string, tableDefinition: Table
     const tableName = options.transformTypeName(tableNameRaw)
     let fields = ''
     Object.keys(tableDefinition).forEach((columnNameRaw) => {
-        let type = tableDefinition[columnNameRaw].tsType
-        let nullable = tableDefinition[columnNameRaw].nullable ? '| null' : ''
+        const type = tableDefinition[columnNameRaw].tsType
+        const nullable = tableDefinition[columnNameRaw].nullable ? '| null' : ''
         const columnName = options.transformColumnName(columnNameRaw)
         fields += `export type ${normalizeName(columnName, options)} = ${type}${nullable};\n`
     })
 
     return `
-        export namespace ${tableName}Fields {
+        export module ${tableName}Fields {
         ${fields}
         }
-    `
+    `;
 }
